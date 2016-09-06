@@ -29,10 +29,7 @@ public class RealConsumer extends AbstractConsumer {
 
 	@Override
 	public boolean doConsumeMessage(Serializable message) {
-		String log = "UUID:" + UUID.randomUUID() + ",topic:" + getTopic() + ",msg:" + JSON.toJSONString(message);
-		if (LOGGER.isInfoEnabled()) {
-			LOGGER.info(log);
-		}
+		LOGGER.info("UUID:" + UUID.randomUUID() + ",topic:" + getTopic() + ",msg:" + JSON.toJSONString(message));
 		boolean result = true;
 		LOGGER.info("accept msg success! msg:{}", message);
 		return result;

@@ -27,3 +27,5 @@
 **/gen-java
 *.iml
 .DS_Store
+*.ipr
+*.iws

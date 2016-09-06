@@ -13,6 +13,13 @@
 		<param-value>/WEB-INF/logback.xml</param-value>
 	</context-param>
 
+	<listener>
+		<listener-class>com.jayden.jxlx.listener.Log4jConfigListener</listener-class>
+	</listener>
+	<listener>
+		<description>spring Listener</description>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<filter>
 		<description>字符集过滤器</description>
 		<filter-name>encodingFilter</filter-name>
@@ -27,7 +34,6 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>

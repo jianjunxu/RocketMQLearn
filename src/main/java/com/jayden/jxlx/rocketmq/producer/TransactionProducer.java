@@ -19,8 +19,8 @@ import java.io.Serializable;
  * Time : 17:00
  * Desc :
  */
-public class RealTransactionProducer extends AbstractProducer {
-	private final static Logger LOGGER = LoggerFactory.getLogger(RealTransactionProducer.class);
+public class TransactionProducer extends AbstractProducer {
+	private final static Logger LOGGER = LoggerFactory.getLogger(TransactionProducer.class);
 
 	@Override
 	public String getTopic() {
@@ -35,19 +35,24 @@ public class RealTransactionProducer extends AbstractProducer {
 
 	@Override
 	public SendResult sendMessage(Serializable message, String topic, String tag) {
+		SendResult sendResult = null;
 		Message msg = new Message(topic, tag, JSON.toJSONBytes(message));
 		try {
-			SendResult sendResult = producer.send(msg);
-			LOGGER.info("send msg success! msg:{},result:{}", JSON.toJSONString(msg), JSON.toJSONString(sendResult));
+			sendResult = producer.send(msg);
+			LOGGER.info("send msg success! msg:{}, result:{}", JSON.toJSONString(msg), JSON.toJSONString(sendResult));
 		} catch (Exception e) {
-			LOGGER.error("send msg error.msg:{},e:{}", JSON.toJSONString(msg), e.getMessage());
+			LOGGER.error("send msg error.msg:{}, e:{}", JSON.toJSONString(msg), e.getMessage());
+			e.printStackTrace();
 		}
-		return null;
+		return sendResult;
 	}
 
 	@Override
 	public TransactionSendResult sendMessage(Serializable message, String topic, String tag, LocalTransactionExecuter transactionExecuter) {
 		TransactionSendResult sendResult = null;
+		if(transactionExecuter == null){
+			transactionExecuter = new TransactionExecuterImpl();
+		}
 		Message msg = new Message(topic, tag, JSON.toJSONBytes(message));
 		try {
 			//发送事务性消息

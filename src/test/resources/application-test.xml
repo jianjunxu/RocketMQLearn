@@ -9,11 +9,11 @@
 
 	<context:property-placeholder location="config-test.properties" ignore-unresolvable="true"/>
 
-	<bean id="realConsumer" class="com.jayden.jxlx.rocketmq.consumer.RealConsumer" init-method="init"
-		  destroy-method="destroy">
-		<property name="nameServer" value="${rocketmq.namesrv.domain}"/>
-	</bean>
-	<bean id="realTransactionProducer" class="com.jayden.jxlx.rocketmq.producer.RealTransactionProducer"
+	<!--<bean id="realConsumer" class="com.jayden.jxlx.rocketmq.consumer.RealConsumer" init-method="init"-->
+		  <!--destroy-method="destroy">-->
+		<!--<property name="nameServer" value="${rocketmq.namesrv.domain}"/>-->
+	<!--</bean>-->
+	<bean id="transactionProducer" class="com.jayden.jxlx.rocketmq.producer.TransactionProducer"
 		  init-method="init" destroy-method="destroy">
 		<property name="nameServer" value="${rocketmq.namesrv.domain}"/>
 	</bean>

@@ -3,7 +3,7 @@ package com.jayden.jxlx.rocketmq;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.rocketmq.client.producer.SendResult;
 import com.jayden.jxlx.enums.TopicEnum;
-import com.jayden.jxlx.rocketmq.producer.RealTransactionProducer;
+import com.jayden.jxlx.rocketmq.producer.TransactionProducer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "classpath:application-test.xml")
 public class RocketMQTest {
 	@Autowired
-	private RealTransactionProducer realTransactionProducer;
+	private TransactionProducer transactionProducer;
 
 	@Test
-	public void test() {
-		SendResult sendResult = realTransactionProducer.sendMessage("test-msginfo", TopicEnum.TEMP_TOPIC.getTopic(), TopicEnum.TEMP_TOPIC.getTags());
+	public void testSendMessage() {
+		SendResult sendResult = transactionProducer.sendMessage("testSendMessage", TopicEnum.TEMP_TOPIC.getTopic(), TopicEnum.TEMP_TOPIC.getTags());
+		System.out.println(JSON.toJSONString(sendResult));
+	}
+
+	@Test
+	public void testSendMessageInTransaction() {
+		SendResult sendResult = transactionProducer.sendMessage("testSendMessageInTransaction", TopicEnum.TEMP_TOPIC.getTopic(), TopicEnum.TEMP_TOPIC.getTags(), null);
 		System.out.println(JSON.toJSONString(sendResult));
 	}
 }
