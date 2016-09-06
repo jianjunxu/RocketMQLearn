@@ -52,15 +52,15 @@ public abstract class AbstractConsumer implements MessageListenerConcurrently {
 			consumer.registerMessageListener(this);
 			consumer.start();
 		} catch (MQClientException e) {
-			LOGGER.error("consumer start error! group:{},ex:{}", CONSUMER_GROUP, e.getErrorMessage());
+			LOGGER.error("consumer start error! nameServer:{},group:{},ex:{}", nameServer, CONSUMER_GROUP, e.getErrorMessage());
 		}
-		LOGGER.info("consumer start! group:{}", CONSUMER_GROUP);
+		LOGGER.info("consumer start! nameServer:{},group:{}", nameServer, CONSUMER_GROUP);
 	}
 
 	public void destroy() {
 		if (consumer != null) {
 			consumer.shutdown();
-			LOGGER.info("consumer shutdown! group:{}", CONSUMER_GROUP);
+			LOGGER.info("consumer shutdown! nameServer:{},group:{}", nameServer, CONSUMER_GROUP);
 		}
 	}
 
@@ -126,6 +126,6 @@ public abstract class AbstractConsumer implements MessageListenerConcurrently {
 	public abstract boolean doConsumeMessage(Serializable message);
 
 	public String getInstanceName() {
-		return "APP_AbstractConsumer" + "_" + getTopic() + "_" + getTags();
+		return "Consumer" + "_" + getTopic() + "_" + getTags();
 	}
 }
